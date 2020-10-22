@@ -10,6 +10,19 @@ type Produto struct {
 	Quantidade int
 }
 
+func InsertProduct(name string, price float64, descricao string, qtd int) {
+
+	myDb := db.ConnectionDataBase()
+	defer myDb.Close()
+
+	queryInsert, err := myDb.Prepare("insert into produtos(name, description, price, qtd) values($1,$2,$3,$4)")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	queryInsert.Exec(name, descricao, price, qtd)
+}
+
 func GetAllProducts() []Produto {
 	myDb := db.ConnectionDataBase()
 	defer myDb.Close()
