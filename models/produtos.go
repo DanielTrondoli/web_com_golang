@@ -4,6 +4,7 @@ import "web_com_golang/db"
 
 // Struct Produtos
 type Produto struct {
+	Id         int
 	Nome       string
 	Descricao  string
 	Preco      float64
@@ -45,6 +46,7 @@ func GetAllProducts() []Produto {
 			panic(err.Error())
 		}
 
+		p.Id = id
 		p.Nome = name
 		p.Descricao = description
 		p.Preco = price
@@ -54,4 +56,17 @@ func GetAllProducts() []Produto {
 	}
 
 	return products
+}
+
+func DeleteProduct(idProduct string) {
+	myDb := db.ConnectionDataBase()
+	defer myDb.Close()
+
+	queryDelete, err := myDb.Prepare("delete from produtos where id=$1")
+	if err != nil {
+		panic(err.Error())
+	}
+
+	queryDelete.Exec(idProduct)
+
 }
