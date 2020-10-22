@@ -1,0 +1,17 @@
+choco install postgresql --version=10.14.1
+
+Create new data Base -> Alura_loja
+
+Create table -> 
+
+create table produtos (    
+    id serial primary key,
+    name varchar,
+    description varchar,
+    price decimal,
+    qtd integer
+);
+
+insert into produtos (name,description, price, qtd) 
+values ( 'Camiseta', 'Preta', 19, 10),
+('Fone', 'Muito Bom', 99, 5);
