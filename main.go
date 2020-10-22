@@ -3,6 +3,8 @@ package main
 import (
 	"html/template"
 	"net/http"
+
+	"github.com/DanielTrondoli/web_com_golang/models/produtos"
 )
 
 var temp = template.Must(template.ParseGlob("templates/*.html"))
@@ -15,7 +17,7 @@ func main() {
 
 func index(w http.ResponseWriter, r *http.Request) {
 
-	products := p
+	products := produtos.GetAllProducts()
 
 	temp.ExecuteTemplate(w, "Index", products)
 
