@@ -1,6 +1,6 @@
 package models
 
-import "github.com/DanielTrondoli/web_com_golang/db"
+import "web_com_golang/db"
 
 // Struct Produtos
 type Produto struct {

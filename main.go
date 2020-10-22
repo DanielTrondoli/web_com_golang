@@ -1,24 +1,14 @@
 package main
 
 import (
-	"html/template"
 	"net/http"
-
-	"github.com/DanielTrondoli/web_com_golang/models/produtos"
+	"web_com_golang/routes"
 )
-
-var temp = template.Must(template.ParseGlob("templates/*.html"))
 
 func main() {
 
-	http.HandleFunc("/", index)
+	routes.Routes()
+	println("aplicacao iniciada na porta 3000")
 	http.ListenAndServe(":3000", nil)
-}
-
-func index(w http.ResponseWriter, r *http.Request) {
-
-	products := produtos.GetAllProducts()
-
-	temp.ExecuteTemplate(w, "Index", products)
 
 }
