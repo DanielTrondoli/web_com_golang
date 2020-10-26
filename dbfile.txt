@@ -1,1 +1,1 @@
-1;Fone de ouvido;Estereo;12.69;42
+1;Fone;Estereo;12.69;34

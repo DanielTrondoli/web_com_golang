@@ -45,23 +45,28 @@ func CarregarDBFile() []string {
 		produtos = append(produtos, linha)
 
 	}
-
+	dbFile.Close()
 	return produtos
 
 }
 
 func SaveDBFile(produtos []string) {
 
-	os.Remove("dbfile.txt")
+	err := os.Remove("dbfile.txt")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	arquivo, err := os.OpenFile("dbfile.txt", os.O_RDWR|os.O_CREATE, 0666)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	for _, p := range produtos {
-		fmt.Println(p)
+		//fmt.Println(p)
 		arquivo.WriteString(p)
 
 	}
+	arquivo.Close()
 
 }

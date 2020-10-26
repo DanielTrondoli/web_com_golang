@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 	"web_com_golang/db"
@@ -22,7 +21,6 @@ func UpdateProductFile(id int, name string, price float64, descricao string, qtd
 
 	for i, p := range produtos {
 		if id == p.Id {
-			fmt.Println(p)
 			p.Nome = name
 			p.Descricao = descricao
 			p.Preco = price
