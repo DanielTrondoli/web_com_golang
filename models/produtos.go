@@ -2,7 +2,6 @@ package models
 
 import "web_com_golang/db"
 
-// Struct Produtos
 type Produto struct {
 	Id         int
 	Nome       string

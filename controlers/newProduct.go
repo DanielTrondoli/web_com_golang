@@ -11,7 +11,13 @@ var temp = template.Must(template.ParseGlob("templates/*.html"))
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	products := models.GetAllProducts()
+	var products = []models.Produto{}
+
+	if models.DataBase == "FILE" {
+		products = models.GetAllProductsFile()
+	} else {
+		products = models.GetAllProducts()
+	}
 
 	temp.ExecuteTemplate(w, "Index", products)
 
@@ -39,24 +45,46 @@ func InsertProduct(w http.ResponseWriter, r *http.Request) {
 			panic(errQtd.Error())
 		}
 
-		models.InsertProduct(name, price, descricao, qtd)
+		if models.DataBase == "FILE" {
+			models.InsertProductFile(name, price, descricao, qtd)
+		} else {
+			models.InsertProduct(name, price, descricao, qtd)
+		}
 
 	}
-
+	models.SaveProducts()
 	http.Redirect(w, r, "/", 301)
 }
 
 func DeleteProduct(w http.ResponseWriter, r *http.Request) {
 	idProduct := r.URL.Query().Get("id")
-	models.DeleteProduct(idProduct)
 
+	if models.DataBase == "FILE" {
+		id, errId := strconv.Atoi(idProduct)
+		if errId != nil {
+			panic(errId.Error())
+		}
+		models.DeleteProductFile(id)
+	} else {
+		models.DeleteProduct(idProduct)
+	}
+	models.SaveProducts()
 	http.Redirect(w, r, "/", 301)
 }
 
 func EditProduct(w http.ResponseWriter, r *http.Request) {
 	idProduct := r.URL.Query().Get("id")
+	var product = models.Produto{}
 
-	product := models.GetProductsById(idProduct)
+	if models.DataBase == "FILE" {
+		id, errId := strconv.Atoi(idProduct)
+		if errId != nil {
+			panic(errId.Error())
+		}
+		product = models.GetProductsByIdFile(id)
+	} else {
+		product = models.GetProductsById(idProduct)
+	}
 
 	temp.ExecuteTemplate(w, "New", product)
 }
@@ -78,10 +106,18 @@ func UpdateProduct(w http.ResponseWriter, r *http.Request) {
 			panic(errQtd.Error())
 		}
 
-		models.UpdateProduct(id, name, price, descricao, qtd)
+		if models.DataBase == "FILE" {
+			id, errId := strconv.Atoi(id)
+			if errId != nil {
+				panic(errId.Error())
+			}
+			models.UpdateProductFile(id, name, price, descricao, qtd)
+		} else {
+			models.UpdateProduct(id, name, price, descricao, qtd)
+		}
 
 	}
-
+	models.SaveProducts()
 	http.Redirect(w, r, "/", 301)
 
 }

@@ -4,13 +4,7 @@ Create new data Base -> Alura_loja
 
 Create table -> 
 
-create table produtos (    
-    id serial primary key,
-    name varchar,
-    description varchar,
-    price decimal,
-    qtd integer
-);
+create table produtos (id serial primary key,name varchar,description varchar,price decimal, qtd integer);
 
 insert into produtos (name,description, price, qtd) 
 values ( 'Camiseta', 'Preta', 19, 10),
